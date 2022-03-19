@@ -1,11 +1,12 @@
-
+import "./style.css";
+import Board from './board.js'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      
-      </header>
+      <h1>Wordle Clone</h1>
+      <hr></hr>
+      <Board></Board>
     </div>
   );
 }
