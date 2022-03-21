@@ -23,3 +23,15 @@
     color: white;
     font-size: 40px;
 }
+
+.correct {
+    background-color: green;
+}
+
+.correct-wrong-p {
+    background-color: yellow;
+}
+
+.wrong {
+    background-color: gray;
+}
