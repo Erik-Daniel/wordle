@@ -54,6 +54,7 @@ export default function Board() {
                     let givenWords = getCurrentLetters;
                     let oneWord = "";
                     let array = [...getClassNames]
+                    let wrongLetters = [];
                     for(let i = 0; i < givenWords.length; i++){
                         
                         if(givenWords[i] === getWord.charAt(i)){
@@ -61,19 +62,40 @@ export default function Board() {
                             
                         }
                         else {
-                            let isThereLetter = false;
-                            for(let z = 0; z < givenWords.length; z++){
-                                if(givenWords[i] === getWord.charAt[z]){
-                                    array.push("correct-wrong-p");
-                                    isThereLetter = true;
-                                    break;
-                                }
-                            }
-                            if(!isThereLetter){
-                                array.push("wrong");
-                            }
+                            array.push("")
+                            wrongLetters.push(i);
                         }
-                        setClassNames(array)
+                        console.log("wrong letters = " + wrongLetters)
+                        // else {
+                        //     let isThereLetter = false;
+                        //     for(let z = 0; z < givenWords.length; z++){
+                        //         if(givenWords[i] === getWord.charAt[z]){
+                        //             array.push("correct-wrong-p");
+                        //             isThereLetter = true;
+                        //         }
+                        //         if(isThereLetter){
+                        //             break;
+
+                        //         }
+                        //     }
+                        //     if(!isThereLetter){
+                        //         array.push("wrong");
+                        //     }
+                        // }
+                    }
+                    for(let z = 0; z < wrongLetters.length; z++){
+                        let isThereLetter = false;
+                         for(let g = 0; g < wrongLetters.length; g++){
+                            if(givenWords[wrongLetters[z]] === getWord.charAt(wrongLetters[g])){
+                                
+                                array.splice(wrongLetters[z],1,"correct-wrong-p");
+                                isThereLetter = true;
+                            }
+
+                        }
+                        if(!isThereLetter){
+                            array.splice(wrongLetters[z],1,"wrong");
+                        }
                     }
                     console.log(getClassNames)
                     // console.log(getWord)
@@ -83,6 +105,8 @@ export default function Board() {
                     // else {
                     //     setStatus("You Lost!");
                     // }
+                    setClassNames(array)
+
                     setCurrentLetters([]);
                 }    
             }
