@@ -28,21 +28,16 @@ export default function Board() {
                     setCurrentLetters(currentArray);
                     console.log(getCurrentLetters)
                 }
-                
-                // setLetters((prevState) => [...prevState, e.key])
             }
             else if(e.keyCode === 8){
                 //backspace pressed
                     if(getCurrentLetters.length > 0){
                         let array = [...getLetters];
                         let currentArray = [...getCurrentLetters];
-
-                        // console.log("before " + getLetters)
                         currentArray.pop();
                         array.pop();
                         setLetters(array)
                         setCurrentLetters(currentArray)
-                        // console.log("after " + getCurrentLetters)
                     }
             }
             else if(e.keyCode === 13){
@@ -52,7 +47,6 @@ export default function Board() {
                 }
                 else {
                     let givenWords = getCurrentLetters;
-                    let oneWord = "";
                     let array = [...getClassNames]
                     let wrongLetters = [];
                     for(let i = 0; i < givenWords.length; i++){
@@ -66,47 +60,27 @@ export default function Board() {
                             wrongLetters.push(i);
                         }
                         console.log("wrong letters = " + wrongLetters)
-                        // else {
-                        //     let isThereLetter = false;
-                        //     for(let z = 0; z < givenWords.length; z++){
-                        //         if(givenWords[i] === getWord.charAt[z]){
-                        //             array.push("correct-wrong-p");
-                        //             isThereLetter = true;
-                        //         }
-                        //         if(isThereLetter){
-                        //             break;
-
-                        //         }
-                        //     }
-                        //     if(!isThereLetter){
-                        //         array.push("wrong");
-                        //     }
-                        // }
+                       
                     }
                     for(let z = 0; z < wrongLetters.length; z++){
+
                         let isThereLetter = false;
                          for(let g = 0; g < wrongLetters.length; g++){
                             if(givenWords[wrongLetters[z]] === getWord.charAt(wrongLetters[g])){
-                                
-                                array.splice(wrongLetters[z],1,"correct-wrong-p");
+                    
+                                let indexToChange = array.length - 5 + wrongLetters[z];
+                                array[indexToChange] = "correct-wrong-p";
                                 isThereLetter = true;
                             }
 
                         }
                         if(!isThereLetter){
-                            array.splice(wrongLetters[z],1,"wrong");
+                        
+                            let indexToChange = array.length - 5 + wrongLetters[z];
+                            array[indexToChange] = "wrong";
                         }
                     }
-                    console.log(getClassNames)
-                    // console.log(getWord)
-                    // if(oneWord.toString() === getWord.toString()){
-                    //     setStatus("You Won!");
-                    // }
-                    // else {
-                    //     setStatus("You Lost!");
-                    // }
                     setClassNames(array)
-
                     setCurrentLetters([]);
                 }    
             }
