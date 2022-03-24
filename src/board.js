@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import word from './Words.js'
+import { check } from './Words.js'
 import "./boardStyle.css"
 
 
@@ -47,35 +48,47 @@ export default function Board() {
                 }
                 else {
                     let givenWords = getCurrentLetters;
+                    let word = getAsWord();
+                    console.log(word);
+                    if(!check(word)){
+                        alert("must be a word");
+                        return;
+                    }
                     let array = [...getClassNames]
                     let wrongLetters = [];
+                    let wrongGetLetters = [];
+                    let winNum = 0;
                     for(let i = 0; i < givenWords.length; i++){
                         
                         if(givenWords[i] === getWord.charAt(i)){
                             array.push("correct");
-                            
+                            winNum += 1;
                         }
                         else {
                             array.push("")
                             wrongLetters.push(i);
+                            wrongGetLetters.push(i)
                         }
-                        console.log("wrong letters = " + wrongLetters)
-                       
+                    }
+                    if(winNum === 5){
+                        win();
                     }
                     for(let z = 0; z < wrongLetters.length; z++){
 
                         let isThereLetter = false;
                          for(let g = 0; g < wrongLetters.length; g++){
-                            if(givenWords[wrongLetters[z]] === getWord.charAt(wrongLetters[g])){
-                    
+                             console.log(wrongGetLetters)
+                             
+                            if(wrongGetLetters[g] === undefined) {break}
+                            if(givenWords[wrongLetters[z]] === getWord.charAt(wrongGetLetters[g])){
                                 let indexToChange = array.length - 5 + wrongLetters[z];
                                 array[indexToChange] = "correct-wrong-p";
                                 isThereLetter = true;
+                                wrongGetLetters.splice(g, 1)
+                            
                             }
-
                         }
                         if(!isThereLetter){
-                        
                             let indexToChange = array.length - 5 + wrongLetters[z];
                             array[indexToChange] = "wrong";
                         }
@@ -85,6 +98,19 @@ export default function Board() {
                 }    
             }
         }
+    }
+
+    function getAsWord(){ 
+        let word = "";
+
+        for(let i = 0; i < getCurrentLetters.length; i++){
+            word += getCurrentLetters[i];
+        }
+        return word;
+    }
+    function win() {
+        setStatus("WON!");
+        return;
     }
     handleKeyPress();
   return (

@@ -22,7 +22,12 @@ import React from 'react'
         return randomWord;
     }
 
+    const check = function(word){
+        return words.includes(word);
+    }
+
     const word = randomWord();
     export default word;
+    export {check};
 
 
