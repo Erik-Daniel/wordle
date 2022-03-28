@@ -23,8 +23,9 @@ export default function Board() {
                 if(getCurrentLetters.length < 5){
                     let array = [...getLetters];
                     let currentArray = [...getCurrentLetters];
-                    array.push(e.key);
-                    currentArray.push(e.key);
+                    let letter = e.key.toLowerCase();
+                    array.push(letter);
+                    currentArray.push(letter);
                     setLetters(array)
                     setCurrentLetters(currentArray);
                     console.log(getCurrentLetters)
@@ -43,6 +44,7 @@ export default function Board() {
             }
             else if(e.keyCode === 13){
                 //enter pressed
+                
                 if(getCurrentLetters.length < 5){
                     alert("word must be at least 5 letters long");
                 }
@@ -79,7 +81,7 @@ export default function Board() {
                          for(let g = 0; g < wrongLetters.length; g++){
                              console.log(wrongGetLetters)
                              
-                            if(wrongGetLetters[g] === undefined) {break}
+                            if(wrongGetLetters[g] === undefined) {break;}
                             if(givenWords[wrongLetters[z]] === getWord.charAt(wrongGetLetters[g])){
                                 let indexToChange = array.length - 5 + wrongLetters[z];
                                 array[indexToChange] = "correct-wrong-p";
@@ -116,8 +118,6 @@ export default function Board() {
   return (
     <div>
         <div className='container'>
-
-        
              <div className='boardContainer'>
                 <div className={`board ${getClassNames[0] === undefined ? "" : getClassNames[0]}`}>{getLetters[0]}</div>
                 <div className={`board ${getClassNames[1] === undefined ? "" : getClassNames[1]}`}>{getLetters[1]}</div>

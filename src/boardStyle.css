@@ -24,14 +24,20 @@
     font-size: 40px;
 }
 
+
 .correct {
     background-color: green;
+    transition: 0.5s;
 }
 
 .correct-wrong-p {
     background-color: yellow;
+    transition: 0.5s;
+
 }
 
 .wrong {
     background-color: gray;
+    transition: 0.5s;
+
 }
