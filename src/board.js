@@ -11,24 +11,35 @@ export default function Board(props) {
     const [getCurrentLetters, setCurrentLetters] = useState([]);
     const [getClassNames, setClassNames] = useState([]);
     const [getWord, setWord] = useState("");
-    const [getStatus, setStatus] = useState("");
+    const [getKeys, setKeys] = useState(['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F',
+    'G','H','J','K','L','ENTER','Z','X','C','V','B','N','M','⌫'])
 
     useEffect(() => {
         setWord(word);
+        props.initializeWord(word);
     }, []);
 
-    function handleKeyPress() {
-        window.onkeydown = function(e) {
+
+    function handleLetters(letter) {
+        if(letter != "ENTER" && letter != "⌫"){
+            let array = [...getLetters];
+            let currentArray = [...getCurrentLetters];
+            array.push(letter);
+            currentArray.push(letter);
+            setLetters(array)
+            setCurrentLetters(currentArray);
+            console.log(getCurrentLetters)
+        }
+    }
+
+
+    function handleKeyPress(e) {
+        // window.onkeydown = function(e) {
             if(e.keyCode >= 65 && e.keyCode <= 122){
                 if(getCurrentLetters.length < 5){
-                    let array = [...getLetters];
-                    let currentArray = [...getCurrentLetters];
                     let letter = e.key.toLowerCase();
-                    array.push(letter);
-                    currentArray.push(letter);
-                    setLetters(array)
-                    setCurrentLetters(currentArray);
-                    console.log(getCurrentLetters)
+                    handleLetters(letter)
+                   
                 }
             }
             else if(e.keyCode === 8){
@@ -79,15 +90,13 @@ export default function Board(props) {
 
                         let isThereLetter = false;
                          for(let g = 0; g < wrongLetters.length; g++){
-                             console.log(wrongGetLetters)
-                             
+                            
                             if(wrongGetLetters[g] === undefined) {break;}
                             if(givenWords[wrongLetters[z]] === getWord.charAt(wrongGetLetters[g])){
                                 let indexToChange = array.length - 5 + wrongLetters[z];
                                 array[indexToChange] = "correct-wrong-p";
                                 isThereLetter = true;
                                 wrongGetLetters.splice(g, 1)
-                            
                             }
                         }
                         if(!isThereLetter){
@@ -102,7 +111,7 @@ export default function Board(props) {
                     setCurrentLetters([]);
                 }    
             }
-        }
+        // }
     }
 
     function getAsWord(){ 
@@ -117,14 +126,19 @@ export default function Board(props) {
 
     function onWin() {
         props.onWin();
+        // window.removeEventListener("keydown", handleKeyPress);
+        // window.onkeydown = null;
+
         return;
     }
 
     function lose(){
         props.onLose();
+        // window.removeEventListener("keydown", handleKeyPress);
+        // window.onkeydown = null;
         return;
     }
-    handleKeyPress();
+    window.onkeydown = handleKeyPress;
   return (
     <div>
         <div className='container'>
@@ -164,8 +178,12 @@ export default function Board(props) {
                 <div className={`board ${getClassNames[24] === undefined ? "" : getClassNames[24]}`}>{getLetters[24]}</div>
             </div>
         </div> 
+        <div className='keyboard'>
+            {getKeys.map( key => 
+                <button key={key} onClick={() => handleLetters(key)}>{key}</button>
+            )}
+        </div>
         <h1>{getWord}</h1>
-        <h1>{getStatus}</h1>
     </div>
   )
 }

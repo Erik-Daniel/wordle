@@ -11,12 +11,29 @@
     margin-top: 60px;
     background-color: rgb(27, 26, 26);
     border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     animation-name: popup;
-    animation-duration: 2s;
+    animation-duration: 1s;
+    color: white;
     
 }
 
 @keyframes popup {
     from {opacity: 0;}
     to {opacity: 1;}
+}
+
+h2 {
+    text-align: center;
+    font-size: 200%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+button {
+    font-size: 150%;
+    cursor: pointer;
 }
