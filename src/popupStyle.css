@@ -3,11 +3,20 @@
     height: 75%;
     min-width: 400px;
     position: absolute;
+    opacity: 1;
     top: 0;
     left: 0;
     right: 0;
     margin: auto;
     margin-top: 60px;
-    background-color: rgb(5, 62, 85);
-    border: 1px solid white;
+    background-color: rgb(27, 26, 26);
+    border: 2px solid white;
+    animation-name: popup;
+    animation-duration: 2s;
+    
+}
+
+@keyframes popup {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }

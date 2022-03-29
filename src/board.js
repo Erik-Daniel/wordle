@@ -6,7 +6,7 @@ import "./boardStyle.css"
 
 
 
-export default function Board() {
+export default function Board(props) {
     const [getLetters, setLetters] = useState([])
     const [getCurrentLetters, setCurrentLetters] = useState([]);
     const [getClassNames, setClassNames] = useState([]);
@@ -73,7 +73,7 @@ export default function Board() {
                         }
                     }
                     if(winNum === 5){
-                        win();
+                        onWin(1)
                     }
                     for(let z = 0; z < wrongLetters.length; z++){
 
@@ -95,6 +95,9 @@ export default function Board() {
                             array[indexToChange] = "wrong";
                         }
                     }
+                    if(getLetters.length === 25){
+                        lose();
+                    }
                     setClassNames(array)
                     setCurrentLetters([]);
                 }    
@@ -112,9 +115,13 @@ export default function Board() {
     }
     
 
-    function win() {
-        setStatus("WON!");
-        getStatus(1)
+    function onWin() {
+        props.onWin();
+        return;
+    }
+
+    function lose(){
+        props.onLose();
         return;
     }
     handleKeyPress();
@@ -161,9 +168,4 @@ export default function Board() {
         <h1>{getStatus}</h1>
     </div>
   )
-}
-
-function getStatus(value) {
-    
-    return value;
 }
