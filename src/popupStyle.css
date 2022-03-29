@@ -1,0 +1,13 @@
+.popup {
+    width: 50%;
+    height: 75%;
+    min-width: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 60px;
+    background-color: rgb(5, 62, 85);
+    border: 1px solid white;
+}

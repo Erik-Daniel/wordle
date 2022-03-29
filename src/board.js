@@ -110,8 +110,11 @@ export default function Board() {
         }
         return word;
     }
+    
+
     function win() {
         setStatus("WON!");
+        getStatus(1)
         return;
     }
     handleKeyPress();
@@ -158,4 +161,9 @@ export default function Board() {
         <h1>{getStatus}</h1>
     </div>
   )
+}
+
+function getStatus(value) {
+    
+    return value;
 }
