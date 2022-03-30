@@ -1,6 +1,9 @@
 body {
     background-color: rgb(27, 26, 26);
-
+}
+@font-face {
+    font-family: Roboto;
+    src: url("/src/styles/fonts/Roboto-Medium.ttf");
 }
 h1 {
     text-align: center;

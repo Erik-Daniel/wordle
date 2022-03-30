@@ -12,7 +12,8 @@ export default function Board(props) {
     const [getClassNames, setClassNames] = useState([]);
     const [getWord, setWord] = useState("");
     const [getKeys, setKeys] = useState(['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F',
-    'G','H','J','K','L','ENTER','Z','X','C','V','B','N','M','⌫'])
+    'G','H','J','K','L','ENTER','Z','X','C','V','B','N','M','⌫']);
+    const [getError, setError] = useState("");
 
     useEffect(() => {
         setWord(word);
@@ -20,53 +21,44 @@ export default function Board(props) {
     }, []);
 
 
-    function handleLetters(letter) {
-        if(letter != "ENTER" && letter != "⌫"){
-            let array = [...getLetters];
-            let currentArray = [...getCurrentLetters];
-            array.push(letter);
-            currentArray.push(letter);
-            setLetters(array)
-            setCurrentLetters(currentArray);
-            console.log(getCurrentLetters)
-        }
-    }
+    // function handleLetters(letter) {
+    //     if(letter != "ENTER" && letter != "⌫"){
+    //         let array = [...getLetters];
+    //         let currentArray = [...getCurrentLetters];
+    //         array.push(letter);
+    //         currentArray.push(letter);
+    //         setLetters(array)
+    //         setCurrentLetters(currentArray);
+    //         console.log(getCurrentLetters)
+    //     }
+    // }
 
 
-    function handleKeyPress(e) {
+    function handleKeyPress(letter) {
         // window.onkeydown = function(e) {
-            if(e.keyCode >= 65 && e.keyCode <= 122){
-                if(getCurrentLetters.length < 5){
-                    let letter = e.key.toLowerCase();
-                    handleLetters(letter)
+            // if(e.keyCode >= 65 && e.keyCode <= 122){
+            //     if(getCurrentLetters.length < 5){
+            //         let letter = e.key.toLowerCase();
+            //         handleLetters(letter)
                    
-                }
-            }
-            else if(e.keyCode === 8){
-                //backspace pressed
-                    if(getCurrentLetters.length > 0){
-                        let array = [...getLetters];
-                        let currentArray = [...getCurrentLetters];
-                        currentArray.pop();
-                        array.pop();
-                        setLetters(array)
-                        setCurrentLetters(currentArray)
-                    }
-            }
-            else if(e.keyCode === 13){
+            //     }
+            // }
+            if(letter === "ENTER"){
                 //enter pressed
                 
                 if(getCurrentLetters.length < 5){
-                    alert("word must be at least 5 letters long");
+                    // alert("word must be at least 5 letters long");
+                    setError("word must be at least 5 letters long");
                 }
                 else {
                     let givenWords = getCurrentLetters;
                     let word = getAsWord();
                     console.log(word);
-                    if(!check(word)){
-                        alert("must be a word");
+                    if(!check(word.toLowerCase())){
+                        setError("Must be a word");
                         return;
                     }
+                    // setError("");
                     let array = [...getClassNames]
                     let wrongLetters = [];
                     let wrongGetLetters = [];
@@ -111,6 +103,30 @@ export default function Board(props) {
                     setCurrentLetters([]);
                 }    
             }
+            
+            else if(letter === "⌫"){
+                //backspace pressed
+                    if(getCurrentLetters.length > 0){
+                        let array = [...getLetters];
+                        let currentArray = [...getCurrentLetters];
+                        currentArray.pop();
+                        array.pop();
+                        setLetters(array)
+                        setCurrentLetters(currentArray)
+                    }
+            }
+            else {
+                if(getCurrentLetters.length < 5){
+                    
+                    let array = [...getLetters];
+                    let currentArray = [...getCurrentLetters];
+                    array.push(letter);
+                    currentArray.push(letter.toLowerCase());
+                    setLetters(array)
+                    setCurrentLetters(currentArray);
+                }
+            }
+            
         // }
     }
 
@@ -138,9 +154,19 @@ export default function Board(props) {
         // window.onkeydown = null;
         return;
     }
-    window.onkeydown = handleKeyPress;
+    window.onkeydown = function(e) {
+        let letter = e.key;
+        if(letter === "Backspace"){
+            letter = "⌫";
+        }
+        if(getKeys.includes(letter.toUpperCase())){
+            handleKeyPress(letter.toUpperCase())
+
+        }
+    };
   return (
     <div>
+        <h2 className='error'>{getError}</h2>
         <div className='container'>
              <div className='boardContainer'>
                 <div className={`board ${getClassNames[0] === undefined ? "" : getClassNames[0]}`}>{getLetters[0]}</div>
@@ -177,12 +203,13 @@ export default function Board(props) {
                 <div className={`board ${getClassNames[23] === undefined ? "" : getClassNames[23]}`}>{getLetters[23]}</div>
                 <div className={`board ${getClassNames[24] === undefined ? "" : getClassNames[24]}`}>{getLetters[24]}</div>
             </div>
-        </div> 
-        <div className='keyboard'>
-            {getKeys.map( key => 
-                <button key={key} onClick={() => handleLetters(key)}>{key}</button>
+            <div className='keyboard'>
+            {getKeys.map(key => 
+                <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>
             )}
-        </div>
+            </div>
+        </div> 
+        
         <h1>{getWord}</h1>
     </div>
   )

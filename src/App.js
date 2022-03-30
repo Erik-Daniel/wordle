@@ -14,7 +14,7 @@ function App() {
       <hr></hr>
       <Board initializeWord={(word) => {setWord(word)}} onWin={() => {setStat("Congratulations! You figured out the word!"); setPopup(true)}} 
       onLose={() => {setStat("At least you know the word now!"); setPopup(true)}}></Board>
-      {getPopup ? <Popup message={getStat} word={getWord}></Popup> : <></>}
+      {getPopup ? <Popup message={getStat} word={getWord.toUpperCase()}></Popup> : <></>}
       
     </div>
   );

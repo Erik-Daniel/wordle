@@ -1,6 +1,6 @@
 .popup {
     width: 50%;
-    height: 75%;
+    height: 50%;
     min-width: 400px;
     position: absolute;
     opacity: 1;
@@ -16,7 +16,7 @@
     justify-content: space-around;
     align-items: center;
     animation-name: popup;
-    animation-duration: 1s;
+    animation-duration: 2s;
     color: white;
     
 }
