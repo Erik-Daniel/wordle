@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import "./popupStyle.css"
 
-export default function popup(props) {
+export default function Popup(props) {
 
   function restart() {
     window.location.reload();

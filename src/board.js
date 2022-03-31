@@ -14,6 +14,7 @@ export default function Board(props) {
     const [getKeys, setKeys] = useState(['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F',
     'G','H','J','K','L','ENTER','Z','X','C','V','B','N','M','⌫']);
     const [getError, setError] = useState("");
+    const [getStatus, setStatus] = useState(-1);
 
     useEffect(() => {
         setWord(word);
@@ -21,31 +22,12 @@ export default function Board(props) {
     }, []);
 
 
-    // function handleLetters(letter) {
-    //     if(letter != "ENTER" && letter != "⌫"){
-    //         let array = [...getLetters];
-    //         let currentArray = [...getCurrentLetters];
-    //         array.push(letter);
-    //         currentArray.push(letter);
-    //         setLetters(array)
-    //         setCurrentLetters(currentArray);
-    //         console.log(getCurrentLetters)
-    //     }
-    // }
-
 
     function handleKeyPress(letter) {
-        // window.onkeydown = function(e) {
-            // if(e.keyCode >= 65 && e.keyCode <= 122){
-            //     if(getCurrentLetters.length < 5){
-            //         let letter = e.key.toLowerCase();
-            //         handleLetters(letter)
-                   
-            //     }
-            // }
+        
+            if(getStatus != -1){return}
             if(letter === "ENTER"){
                 //enter pressed
-                
                 if(getCurrentLetters.length < 5){
                     // alert("word must be at least 5 letters long");
                     setError("word must be at least 5 letters long");
@@ -58,7 +40,7 @@ export default function Board(props) {
                         setError("Must be a word");
                         return;
                     }
-                    // setError("");
+                    setError("");
                     let array = [...getClassNames]
                     let wrongLetters = [];
                     let wrongGetLetters = [];
@@ -117,7 +99,7 @@ export default function Board(props) {
             }
             else {
                 if(getCurrentLetters.length < 5){
-                    
+                    console.log(getClassNames)
                     let array = [...getLetters];
                     let currentArray = [...getCurrentLetters];
                     array.push(letter);
@@ -141,17 +123,19 @@ export default function Board(props) {
     
 
     function onWin() {
+        setStatus(1);
         props.onWin();
         // window.removeEventListener("keydown", handleKeyPress);
-        // window.onkeydown = null;
+        window.onkeydown = null;
 
         return;
     }
 
     function lose(){
+        setStatus(1);
         props.onLose();
         // window.removeEventListener("keydown", handleKeyPress);
-        // window.onkeydown = null;
+        window.onkeydown = null;
         return;
     }
     window.onkeydown = function(e) {
@@ -167,7 +151,7 @@ export default function Board(props) {
   return (
     <div>
         <h2 className='error'>{getError}</h2>
-        <div className='container'>
+        <div className='container' style={getStatus != -1 ? {opacity: 0.5, transition: "2s"} : {opacity: 1}}>
              <div className='boardContainer'>
                 <div className={`board ${getClassNames[0] === undefined ? "" : getClassNames[0]}`}>{getLetters[0]}</div>
                 <div className={`board ${getClassNames[1] === undefined ? "" : getClassNames[1]}`}>{getLetters[1]}</div>
@@ -204,9 +188,9 @@ export default function Board(props) {
                 <div className={`board ${getClassNames[24] === undefined ? "" : getClassNames[24]}`}>{getLetters[24]}</div>
             </div>
             <div className='keyboard'>
-            {getKeys.map(key => 
-                <button key={key} onClick={() => handleKeyPress(key)}>{key}</button>
-            )}
+            {
+            getKeys.map(key => 
+                <button className={getCurrentLetters.length === 0 ? getLetters.lastIndexOf(key) != -1 ? getClassNames[getLetters.lastIndexOf(key)] : "" : getClassNames[getLetters.indexOf(key)]} key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
             </div>
         </div> 
         

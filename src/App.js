@@ -8,13 +8,15 @@ function App() {
   const [getPopup, setPopup] = useState(false);
   const [getWord, setWord] = useState();
 
+
+
   return (
     <div className="App">
       <h1>Wordle Clone</h1>
       <hr></hr>
-      <Board initializeWord={(word) => {setWord(word)}} onWin={() => {setStat("Congratulations! You figured out the word!"); setPopup(true)}} 
+      <Board style={getPopup ? {opacity: 0.5, transition: "0.5s"} : {opacity: 1}} initializeWord={(word) => {setWord(word)}} onWin={() => {setStat("Congratulations! You figured out the word!"); setPopup(true)}} 
       onLose={() => {setStat("At least you know the word now!"); setPopup(true)}}></Board>
-      {getPopup ? <Popup message={getStat} word={getWord.toUpperCase()}></Popup> : <></>}
+      {getPopup ? <Popup style={{opacity: 1} } message={getStat} word={getWord.toUpperCase()}></Popup> : <></>}
       
     </div>
   );
