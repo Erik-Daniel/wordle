@@ -1,5 +1,4 @@
-import React, { useRef } from 'react'
-import "./popupStyle.css"
+import "./styles/popupStyle.css"
 
 export default function Popup(props) {
 

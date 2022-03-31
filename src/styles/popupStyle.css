@@ -35,5 +35,15 @@ h2 {
 
 button {
     font-size: 150%;
+    background-color: rgb(27, 26, 26);
+    outline: 0;
+    border: 1px solid white;
+    color: white;
+    padding: 15px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
 }

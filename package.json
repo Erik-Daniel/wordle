@@ -1,5 +1,6 @@
 {
   "name": "wordle",
+  "homepage": "https://erik-daniel.github.io/wordle",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

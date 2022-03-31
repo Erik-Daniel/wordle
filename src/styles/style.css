@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(27, 26, 26);
+}
+@font-face {
+    font-family: Roboto;
+    src: url("/src/styles/fonts/Roboto-Medium.ttf");
+}
+h1 {
+    text-align: center;
+    color: white;
+}
+
+
+.show {
+    position: absolute;
+    top: 0;
+    margin-top: 25px;
+    margin-left: 15px;
+    width: 100px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre;
+    font-size: 100%;
+}

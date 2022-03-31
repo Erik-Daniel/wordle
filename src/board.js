@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import word from './Words.js'
 import { check } from './Words.js'
-import "./boardStyle.css"
+import "./styles/boardStyle.css"
 
 
 
@@ -22,20 +22,18 @@ export default function Board(props) {
         props.initializeWord(word);
     }, []);
 
-
-
     function handleKeyPress(letter) {
-            if(getStatus != -1){return}
+            if(getStatus != -1){
+                return
+            }
             if(letter === "ENTER"){
                 //enter pressed
                 if(getCurrentLetters.length < 5){
-                    // alert("word must be at least 5 letters long");
                     setError("word must be at least 5 letters long");
                 }
                 else {
                     let givenWords = getCurrentLetters;
                     let word = getAsWord();
-                    console.log(word);
                     if(!check(word.toLowerCase())){
                         setError("Must be a word");
                         return;
@@ -55,7 +53,6 @@ export default function Board(props) {
                         }
                         else {
                             array.push("")
-
                             wrongLetters.push(i);
                             wrongGetLetters.push(i)
                         }
@@ -72,13 +69,9 @@ export default function Board(props) {
                             if(givenWords[wrongLetters[z]] === getWord.charAt(wrongGetLetters[g])){
                                 let indexToChange = array.length - 5 + wrongLetters[z];
                                 array[indexToChange] = "correct-wrong-p";
-                                console.log("THIS = " + keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] )
-                                console.log(keyArray[0])
-                                console.log(givenWords[wrongLetters[z]])
                                 if(keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct"){
                                     keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] = "correct-wrong-p";
                                 }
-
                                 isThereLetter = true;
                                 wrongGetLetters.splice(g, 1)
                             }
@@ -86,7 +79,6 @@ export default function Board(props) {
                         if(!isThereLetter){
                             let indexToChange = array.length - 5 + wrongLetters[z];
                             array[indexToChange] = "wrong";
-                            console.log("s " + keyArray[0][givenWords[wrongLetters[z]].toUpperCase()])
                             if(keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct" && keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct-wrong-p"){
                             keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] = "wrong";
                             }
@@ -112,8 +104,8 @@ export default function Board(props) {
                     }
             }
             else {
+                //key pressed
                 if(getCurrentLetters.length < 5){
-                    console.log(getClassNames)
                     let array = [...getLetters];
                     let currentArray = [...getCurrentLetters];
                     array.push(letter);
@@ -121,27 +113,21 @@ export default function Board(props) {
                     setLetters(array)
                     setCurrentLetters(currentArray);
                 }
-            }
-            
-        // }
+            } 
     }
 
     function getAsWord(){ 
         let word = "";
-
         for(let i = 0; i < getCurrentLetters.length; i++){
             word += getCurrentLetters[i];
         }
         return word;
     }
-    
 
     function onWin() {
         setStatus(1);
         props.onWin();
-        // window.removeEventListener("keydown", handleKeyPress);
         window.onkeydown = null;
-
         return;
     }
 
@@ -158,12 +144,11 @@ export default function Board(props) {
         }
         if(getKeys.includes(letter.toUpperCase())){
             handleKeyPress(letter.toUpperCase())
-
         }
-    };
+    }
   return (
     <div>
-        <h2 className='error'>{getError}</h2>
+        <h3 className='error'>{getError}</h3>
         <div className='container' style={getStatus != -1 ? {opacity: 0.5, transition: "1.5s"} : {opacity: 1}}>
              <div className='boardContainer'>
                 <div className={`board ${getClassNames[0] === undefined ? "" : getClassNames[0]}`}>{getLetters[0]}</div>
@@ -203,11 +188,10 @@ export default function Board(props) {
             <div className='keyboard'>
             {
             getKeys.map(key => 
-                <button className={getKeyClassNames[0][key]} key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+                <button className={getKeyClassNames[0][key]} key={key} onClick={() => handleKeyPress(key)}>{key}</button>)
+            }
             </div>
         </div> 
-        
-        <h1>{getWord}</h1>
     </div>
   )
 }
