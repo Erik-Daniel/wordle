@@ -139,6 +139,11 @@ export default function Board(props) {
     }
     window.onkeydown = function(e) {
         let letter = e.key;
+        if(getStatus != -1){
+            if(e.key === "Enter"){
+                window.location.reload();
+            }
+        }
         if(letter === "Backspace"){
             letter = "⌫";
         }
