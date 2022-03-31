@@ -10,6 +10,7 @@ export default function Board(props) {
     const [getLetters, setLetters] = useState([])
     const [getCurrentLetters, setCurrentLetters] = useState([]);
     const [getClassNames, setClassNames] = useState([]);
+    const [getKeyClassNames, setKeyClassNames] = useState([{A: "",B: "",C: "",D: "",E: "",F: "",G: "",H: "",I: "",J: "",K: "",L: "",M: "",N: "",O: "",P: "",Q: "",R: "",S: "",T: "",U: "",V: "",W: "",X: "",Y: "",Z: ""}])
     const [getWord, setWord] = useState("");
     const [getKeys, setKeys] = useState(['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F',
     'G','H','J','K','L','ENTER','Z','X','C','V','B','N','M','⌫']);
@@ -24,7 +25,6 @@ export default function Board(props) {
 
 
     function handleKeyPress(letter) {
-        
             if(getStatus != -1){return}
             if(letter === "ENTER"){
                 //enter pressed
@@ -42,6 +42,7 @@ export default function Board(props) {
                     }
                     setError("");
                     let array = [...getClassNames]
+                    let keyArray = [...getKeyClassNames];
                     let wrongLetters = [];
                     let wrongGetLetters = [];
                     let winNum = 0;
@@ -49,10 +50,12 @@ export default function Board(props) {
                         
                         if(givenWords[i] === getWord.charAt(i)){
                             array.push("correct");
+                            keyArray[0][givenWords[i].toUpperCase()] = "correct";
                             winNum += 1;
                         }
                         else {
                             array.push("")
+
                             wrongLetters.push(i);
                             wrongGetLetters.push(i)
                         }
@@ -69,6 +72,13 @@ export default function Board(props) {
                             if(givenWords[wrongLetters[z]] === getWord.charAt(wrongGetLetters[g])){
                                 let indexToChange = array.length - 5 + wrongLetters[z];
                                 array[indexToChange] = "correct-wrong-p";
+                                console.log("THIS = " + keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] )
+                                console.log(keyArray[0])
+                                console.log(givenWords[wrongLetters[z]])
+                                if(keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct"){
+                                    keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] = "correct-wrong-p";
+                                }
+
                                 isThereLetter = true;
                                 wrongGetLetters.splice(g, 1)
                             }
@@ -76,6 +86,10 @@ export default function Board(props) {
                         if(!isThereLetter){
                             let indexToChange = array.length - 5 + wrongLetters[z];
                             array[indexToChange] = "wrong";
+                            console.log("s " + keyArray[0][givenWords[wrongLetters[z]].toUpperCase()])
+                            if(keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct" && keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] != "correct-wrong-p"){
+                            keyArray[0][givenWords[wrongLetters[z]].toUpperCase()] = "wrong";
+                            }
                         }
                     }
                     if(getLetters.length === 25){
@@ -134,7 +148,6 @@ export default function Board(props) {
     function lose(){
         setStatus(1);
         props.onLose();
-        // window.removeEventListener("keydown", handleKeyPress);
         window.onkeydown = null;
         return;
     }
@@ -151,7 +164,7 @@ export default function Board(props) {
   return (
     <div>
         <h2 className='error'>{getError}</h2>
-        <div className='container' style={getStatus != -1 ? {opacity: 0.5, transition: "2s"} : {opacity: 1}}>
+        <div className='container' style={getStatus != -1 ? {opacity: 0.5, transition: "1.5s"} : {opacity: 1}}>
              <div className='boardContainer'>
                 <div className={`board ${getClassNames[0] === undefined ? "" : getClassNames[0]}`}>{getLetters[0]}</div>
                 <div className={`board ${getClassNames[1] === undefined ? "" : getClassNames[1]}`}>{getLetters[1]}</div>
@@ -190,7 +203,7 @@ export default function Board(props) {
             <div className='keyboard'>
             {
             getKeys.map(key => 
-                <button className={getCurrentLetters.length === 0 ? getLetters.lastIndexOf(key) != -1 ? getClassNames[getLetters.lastIndexOf(key)] : "" : getClassNames[getLetters.indexOf(key)]} key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
+                <button className={getKeyClassNames[0][key]} key={key} onClick={() => handleKeyPress(key)}>{key}</button>)}
             </div>
         </div> 
         
